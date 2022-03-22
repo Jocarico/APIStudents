@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from  flask_restful import Api, Resource, reqparse, abort
 from flask_cors import CORS
 from flask_pymongo import pymongo
-import app.db_config as database
+import db_config as database
 
 app = Flask(__name__)
 api = Api(app)
@@ -22,16 +22,8 @@ class Test(Resource):
     def get(self):
         return jsonify({"message":"You are connected"})
 
-class Student(Resource):
-    
-    def get(self, id):
-        response = database.db.students.find_one({'id':id})
-        del response['_id']
-        return jsonify(response)
-
-
 class Students(Resource):
-
+    
     def get(self):
         response = list(database.db.students.find())
         students = []
@@ -39,6 +31,14 @@ class Students(Resource):
             del student['_id']
             students.append(student)
         return jsonify({'results':students})
+
+
+class Student(Resource):
+
+    def get(self, id):
+        response = database.db.students.find_one({'id':id})
+        del response['_id']
+        return jsonify(response)
 
     def post(self):
         self.abort_id_id_exist(request.json['id'])
@@ -90,6 +90,6 @@ class Students(Resource):
 
 api.add_resource(Test,'/test/')
 api.add_resource(Students,'/students/')
-api.add_resource(Student, '/students/<int:id>/')
+api.add_resource(Student, '/student/', '/student/<int:id>')
 if __name__ == '__main__':
     app.run(load_dotenv=True, port=8000)
