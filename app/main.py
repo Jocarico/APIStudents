@@ -95,6 +95,9 @@ class Student(Resource):
                 'career': args['career'],
             }}
         )
+        student = self.abort_if_not_exist(id) 
+        del student['_id'] 
+        return jsonify(student)
 
     def delete(self,id):
         student = self.abort_if_not_exist(id)
