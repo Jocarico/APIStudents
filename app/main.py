@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, request
 from  flask_restful import Api, Resource, reqparse, abort
 from flask_cors import CORS
-from flask_pymongo import pymongo
-import app.db_config as database
+# from flask_pymongo import pymongo
+import db_config as database
 
 app = Flask(__name__)
 api = Api(app)
@@ -60,7 +60,7 @@ class Student(Resource):
             'last_name': args['last_name'],
             'image': args['image'],
             'group': args['group'],
-            'career': args['carrer'],
+            'career': args['career'],
         })
         return jsonify(args)
 
