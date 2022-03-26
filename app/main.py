@@ -80,7 +80,7 @@ class Student(Resource):
         )
         return jsonify(args)
     
-    def patch(self):
+    def patch(self, id):
         student = self.abort_if_not_exist(id)
         args = patch_students_args.parse_args()
 
