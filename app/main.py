@@ -87,12 +87,12 @@ class Student(Resource):
         database.db.students.update_one(
             {'id': id},
             {'$set': {
-                'id': args['id'],
-                'first_name': args['first_name'],
-                'last_name': args['last_name'],
-                'image': args['image'],
-                'group': args['group'],
-                'career': args['career'],
+                'id': args['id'] or student['id'],
+                'first_name': args['first_name'] or student['first_name'],
+                'last_name': args['last_name'] or student['last_name'],
+                'image': args['image'] or student['image'],
+                'group': args['group'] or student['group'],
+                'career': args['career'] or student['career'],
             }}
         )
         student = self.abort_if_not_exist(id) 
